@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="addTaskFormOverlay">
+    <div class="addTaskFormOverlay inactive">
         <form class="newTask" action="" method="get">
             <div>
                 <div class="formTitle">Add a new Task</div>
@@ -34,7 +34,7 @@
                 </select>
             </div>
             <div>
-                <label for="project">Select Project:</label>
+                <label for="project">Project:</label>
                 <select name="project" id="project">
                     <option value="home">Home</option>
                 </select>
@@ -48,12 +48,23 @@
     <main>
         <div class="menu">
             <div class="home">Home</div>
-            <div class="projects">Projects</div>
+            <div class="projectSection">
+                <div>Projects</div>
+                <button id="addProjectBtn">+</button>
+            </div>
+            <form action="get" class="newProject inactive">
+                <input type="text" id="projectName" name="projectName">
+                <div>
+                    <button type="submit">Add</button>
+                    <button type="reset">Cancel</button>
+                </div>
+            </form>
+            
         </div>
         <div class="dashboard">
             <div class="dashHeader">
                 <div class="projectTitle">Home</div>
-                <button class="addTaskBtn">+</button>    
+                <button id="addTaskBtn">+</button>    
             </div>
             <div class="todolist"></div>
         </div>

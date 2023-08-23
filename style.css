@@ -1,0 +1,67 @@
+html, body{
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+header{
+    background-color: blueviolet;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+main{
+    display: flex;
+    flex: 1;
+}
+
+/* Side Menu */
+main .menu{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: lightblue;
+    width: 200px;
+    padding: 8px;
+    font-size: 24px;
+}
+
+/* Main Todo List Display */
+main .dashboard{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 16px;
+    gap: 16px;
+}
+
+.dashboard .dashHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 2px solid blueviolet;
+}
+
+main .dashboard .addTaskBtn{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    font-size: 32px;
+    background-color: blueviolet;
+    border: none;
+    color: white;
+}
+
+main .dashboard .addTaskBtn:hover{
+    cursor: pointer;
+}
+
+.dashboard .dashHeader .projectTitle{
+    font-size: 24px;
+}

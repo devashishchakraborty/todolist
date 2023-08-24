@@ -46,6 +46,7 @@ todoList.addProject("Home", new Project());
 const addTodoItemBtn = document.querySelector("#addTaskBtn");
 const addTodoFormOverlay = document.querySelector(".addTaskFormOverlay");
 const newTodoTaskForm = document.querySelector(".newTask");
+const todoDisplayArea = document.querySelector(".todoDisplay");
 
 function addTodoBtnHandler(){
     addTodoFormOverlay.classList.remove("inactive");
@@ -54,6 +55,7 @@ function addTodoBtnHandler(){
 function addNewTodoFormHandler(e){
     todoList.getProject(project.value).addTodoItem(new Todo(title.value, description.value, dueDate.value, priority.value));
     addTodoFormOverlay.classList.add("inactive");
+    displayTodos(todoList.getProject(project.value));
     console.log(todoList);
 
     title.value = "";
@@ -71,6 +73,15 @@ function addNewTodo(){
     addTodoItemBtn.addEventListener("click", addTodoBtnHandler);
     newTodoTaskForm.addEventListener("submit", e => addNewTodoFormHandler(e));
     newTodoTaskForm.addEventListener("reset", addTodoFormCloseBtnHandler);
+}
+
+function displayTodos(project){
+    todoDisplayArea.textContent = "";
+    project.itemList.forEach(function(todoTask){
+        const todoItemDiv = document.createElement("div");
+        todoItemDiv.innerHTML = ` <div>Title: ${todoTask.title}</div>`;
+        todoDisplayArea.appendChild(todoItemDiv);   
+    })
 }
 
 addNewTodo();

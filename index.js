@@ -51,6 +51,8 @@ const newTodoTaskForm = document.querySelector(".newTask");
 const newProjectForm = document.querySelector(".newProject");
 
 const todoDisplayArea = document.querySelector(".todoDisplay");
+const projectsDisplayArea = document.querySelector(".projectDisplayArea");
+
 
 function addTodoBtnHandler(){
     addTodoFormOverlay.classList.remove("inactive");
@@ -100,6 +102,7 @@ function cancelProjectBtnHandler(){
 function submitProjectBtnHandler(e){
     todoList.addProject(projectName.value, new Project());
     newProjectForm.classList.add("inactive");
+    displayProjects();
     console.log(todoList); 
     projectName.value = "";
 
@@ -112,8 +115,19 @@ function addNewProject(){
     newProjectForm.addEventListener("reset", cancelProjectBtnHandler);
 }
 
-
+function displayProjects(){
+    projectsDisplayArea.textContent = "";
+    const projectNames = Object.keys(todoList.list);
+    
+    projectNames.forEach(function(projectName){
+        const projectTab = document.createElement("div");
+        projectTab.classList.add("projectTab");
+        projectTab.innerHTML = `<div class="projectTabName">${projectName}</div><div></div>`;
+        projectsDisplayArea.appendChild(projectTab);
+    })
+}
 
 displayTodos(todoList.getProject("Home"));
 addNewTodo();
+displayProjects();
 addNewProject();

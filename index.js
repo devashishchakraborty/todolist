@@ -44,19 +44,23 @@ todoList.addProject("Home", new Project());
 
 // DOM Stuff
 const addTodoItemBtn = document.querySelector("#addTaskBtn");
+const addProjectBtn = document.querySelector("#addProjectBtn");
+
 const addTodoFormOverlay = document.querySelector(".addTaskFormOverlay");
 const newTodoTaskForm = document.querySelector(".newTask");
+const newProjectForm = document.querySelector(".newProject");
+
 const todoDisplayArea = document.querySelector(".todoDisplay");
 
 function addTodoBtnHandler(){
     addTodoFormOverlay.classList.remove("inactive");
 }
 
-function addNewTodoFormHandler(e){
+function submitNewTodoFormHandler(e){
     todoList.getProject(project.value).addTodoItem(new Todo(title.value, description.value, dueDate.value, priority.value));
     addTodoFormOverlay.classList.add("inactive");
     displayTodos(todoList.getProject(project.value));
-    console.log(todoList);
+    console.log(todoList); 
 
     title.value = "";
     description.value = "";
@@ -71,7 +75,7 @@ function addTodoFormCloseBtnHandler(){
 
 function addNewTodo(){
     addTodoItemBtn.addEventListener("click", addTodoBtnHandler);
-    newTodoTaskForm.addEventListener("submit", e => addNewTodoFormHandler(e));
+    newTodoTaskForm.addEventListener("submit", e => submitNewTodoFormHandler(e));
     newTodoTaskForm.addEventListener("reset", addTodoFormCloseBtnHandler);
 }
 
@@ -84,4 +88,32 @@ function displayTodos(project){
     })
 }
 
+// Projects DOM
+function addProjectBtnHandler(){
+    newProjectForm.classList.remove("inactive");
+}
+
+function cancelProjectBtnHandler(){
+    newProjectForm.classList.add("inactive");
+}
+
+function submitProjectBtnHandler(e){
+    todoList.addProject(projectName.value, new Project());
+    newProjectForm.classList.add("inactive");
+    console.log(todoList); 
+    projectName.value = "";
+
+    e.preventDefault();
+}
+
+function addNewProject(){
+    addProjectBtn.addEventListener("click", addProjectBtnHandler);
+    newProjectForm.addEventListener("submit", e => submitProjectBtnHandler(e));
+    newProjectForm.addEventListener("reset", cancelProjectBtnHandler);
+}
+
+
+
+displayTodos(todoList.getProject("Home"));
 addNewTodo();
+addNewProject();

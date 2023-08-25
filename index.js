@@ -45,6 +45,18 @@ class Project{
     removeTodoItem(itemIndex){
         this.itemList.splice(itemIndex);
     }
+
+    todoItemNameExists(todoItemName){
+        return this.getTodoItemNames().includes(todoItemName);
+    }
+
+    getTodoItemNames(){
+        let todoItemNames = [];
+        this.itemList.forEach(function(todoItem){
+            todoItemNames.push(todoItem.title);
+        })
+        return todoItemNames;
+    }
 }
 
 const todoList = new TodoList();
@@ -62,20 +74,26 @@ const newProjectForm = document.querySelector(".newProject");
 const todoDisplayArea = document.querySelector(".todoDisplay");
 const projectsDisplayArea = document.querySelector(".projectDisplayArea");
 
+const dashboardProjectTitle = document.querySelector(".dashboard .projectTitle");
 
 function addTodoBtnHandler(){
     addTodoFormOverlay.classList.remove("inactive");
 }
 
 function submitNewTodoFormHandler(e){
-    todoList.getProject(project.value).addTodoItem(new Todo(title.value, description.value, dueDate.value, priority.value));
-    addTodoFormOverlay.classList.add("inactive");
-    displayTodos(todoList.getProject(project.value));
-    console.log(todoList); 
+    if (todoList.getProject(project.value).todoItemNameExists(title.value)){
+        alert("Task Name already exists, choose another name");
+    } else {
+        todoList.getProject(project.value).addTodoItem(new Todo(title.value, description.value, dueDate.value, priority.value));
+        addTodoFormOverlay.classList.add("inactive");
+        displayTodos(project.value);
+        console.log(todoList); 
 
-    title.value = "";
-    description.value = "";
-    dueDate.value = "";
+        title.value = "";
+        description.value = "";
+        dueDate.value = "";
+    }
+    
 
     e.preventDefault();
 }
@@ -90,12 +108,16 @@ function addNewTodo(){
     newTodoTaskForm.addEventListener("reset", addTodoFormCloseBtnHandler);
 }
 
-function displayTodos(project){
+function displayTodos(projectName){
     todoDisplayArea.textContent = "";
-    project.itemList.forEach(function(todoTask){
-        const todoItemDiv = document.createElement("div");
-        todoItemDiv.innerHTML = ` <div>Title: ${todoTask.title}</div>`;
-        todoDisplayArea.appendChild(todoItemDiv);   
+    const currentProject = todoList.getProject(projectName);
+
+    dashboardProjectTitle.textContent = projectName;
+    currentProject.itemList.forEach(function(todoTask){
+        todoDisplayArea.innerHTML += `
+        <div>
+            <div class="todoTaskTitle">Title: ${todoTask.title}</div>
+        </div>`;
     })
 }
 
@@ -113,6 +135,7 @@ function submitProjectBtnHandler(e){
         alert("Project Name already exists, choose a different name.")
     } else {
         todoList.addProject(projectName.value, new Project());
+        updateProjectNameinFormSelect();
         addProjectFormOverlay.classList.add("inactive");
         displayProjects();
 
@@ -129,19 +152,30 @@ function addNewProject(){
     newProjectForm.addEventListener("reset", () => cancelProjectBtnHandler());
 }
 
+function updateProjectNameinFormSelect(){
+    const projectNameSelection = newTodoTaskForm.querySelector("#project");
+    projectNameSelection.textContent = "";
+    todoList.getProjectNames().forEach(function(projectName){
+        projectNameSelection.innerHTML += `
+        <option value=${projectName}>${projectName}</option>
+        `
+    })
+}
+
 function displayProjects(){
     projectsDisplayArea.textContent = "";
     const projectNames = todoList.getProjectNames().slice(1);
     
     projectNames.forEach(function(projectName){
-        const projectTab = document.createElement("div");
-        projectTab.classList.add("projectTab");
-        projectTab.innerHTML = `<div class="projectTabName">${projectName}</div><div></div>`;
-        projectsDisplayArea.appendChild(projectTab);
+        projectsDisplayArea.innerHTML += `
+        <div class="projectTab">
+            <div class="projectTabName">${projectName}</div>
+            <div>&#10799;</div>
+        </div>`;
     })
 }
 
-displayTodos(todoList.getProject("Home"));
+displayTodos("Home");
 addNewTodo();
 displayProjects();
 addNewProject();

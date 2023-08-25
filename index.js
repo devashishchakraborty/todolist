@@ -23,6 +23,14 @@ class TodoList{
     getProject(projectName){
         return this.list[projectName];
     }
+
+    projectNameExists(projectName){
+        return Object.keys(this.list).includes(projectName);
+    }
+
+    getProjectNames(){
+        return Object.keys(this.list);
+    }
 }
 
 class Project{
@@ -48,6 +56,7 @@ const addProjectBtn = document.querySelector("#addProjectBtn");
 
 const addTodoFormOverlay = document.querySelector(".addTaskFormOverlay");
 const newTodoTaskForm = document.querySelector(".newTask");
+const addProjectFormOverlay = document.querySelector(".addProjectOverlay")
 const newProjectForm = document.querySelector(".newProject");
 
 const todoDisplayArea = document.querySelector(".todoDisplay");
@@ -92,32 +101,37 @@ function displayTodos(project){
 
 // Projects DOM
 function addProjectBtnHandler(){
-    newProjectForm.classList.remove("inactive");
+    addProjectFormOverlay.classList.remove("inactive");
 }
 
 function cancelProjectBtnHandler(){
-    newProjectForm.classList.add("inactive");
+    addProjectFormOverlay.classList.add("inactive");
 }
 
 function submitProjectBtnHandler(e){
-    todoList.addProject(projectName.value, new Project());
-    newProjectForm.classList.add("inactive");
-    displayProjects();
-    console.log(todoList); 
-    projectName.value = "";
+    if (todoList.projectNameExists(projectName.value)){
+        alert("Project Name already exists, choose a different name.")
+    } else {
+        todoList.addProject(projectName.value, new Project());
+        addProjectFormOverlay.classList.add("inactive");
+        displayProjects();
 
+        console.log(todoList);
+        projectName.value = "";
+    
+    }
     e.preventDefault();
 }
 
 function addNewProject(){
-    addProjectBtn.addEventListener("click", addProjectBtnHandler);
-    newProjectForm.addEventListener("submit", e => submitProjectBtnHandler(e));
-    newProjectForm.addEventListener("reset", cancelProjectBtnHandler);
+    addProjectBtn.addEventListener("click", () => addProjectBtnHandler());
+    newProjectForm.addEventListener("submit", (e) => submitProjectBtnHandler(e));
+    newProjectForm.addEventListener("reset", () => cancelProjectBtnHandler());
 }
 
 function displayProjects(){
     projectsDisplayArea.textContent = "";
-    const projectNames = Object.keys(todoList.list);
+    const projectNames = todoList.getProjectNames().slice(1);
     
     projectNames.forEach(function(projectName){
         const projectTab = document.createElement("div");

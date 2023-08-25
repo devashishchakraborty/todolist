@@ -8,6 +8,17 @@
     <script src="index.js" defer></script>
 </head>
 <body>
+    <div class="addProjectOverlay inactive">
+        <form action="get" class="newProject">
+            <div>Add New Project</div>
+            <input type="text" id="projectName" name="projectName" required>
+            <div>
+                <button type="submit">Add</button>
+                <button type="reset">Cancel</button>
+            </div>
+        </form>
+    </div>
+
     <div class="addTaskFormOverlay inactive">
         <form class="newTask" action="" method="get">
             <div>
@@ -54,14 +65,6 @@
                 <button id="addProjectBtn">+</button>
             </div>
             <div class="projectDisplayArea"></div>
-            <form action="get" class="newProject inactive">
-                <input type="text" id="projectName" name="projectName" required>
-                <div>
-                    <button type="submit">Add</button>
-                    <button type="reset">Cancel</button>
-                </div>
-            </form>
-            
         </div>
         <div class="dashboard">
             <div class="dashHeader">

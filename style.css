@@ -6,6 +6,8 @@ html, body{
     flex-direction: column;
     --button-hover-background-color: #9b31ff;
     --dark-blueviolet: #7425be;
+    --cancel-button-background-color: crimson;
+    --cancel-button-background-color-hover: #e61542;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -29,7 +31,7 @@ main .menu{
     flex-direction: column;
     gap: 8px;
     background-color: lightblue;
-    width: 200px;
+    width: 240px;
     padding: 8px;
     font-size: 24px;
 }
@@ -39,6 +41,7 @@ main .menu{
     border-bottom: 2px solid darkslateblue;
 }
 
+/* Projects Display */
 .menu .projectSection{
     display: flex;
     justify-content: space-between;
@@ -95,13 +98,9 @@ main .dashboard{
     font-size: 24px;
 }
 
-
-/* Add Task Form */
-div[class="addTaskFormOverlay inactive"]{
-    display: none;
-}
-
-.addTaskFormOverlay{
+/* Form Overlays */
+.addTaskFormOverlay,
+.addProjectOverlay{
     display: flex;
     position: fixed;
     height: 100%;
@@ -109,6 +108,12 @@ div[class="addTaskFormOverlay inactive"]{
     background: rgba(0, 0, 0, 0.4);
     justify-content: center;
     align-items: center;
+}
+
+
+/* Add Task Form */
+div[class="addTaskFormOverlay inactive"]{
+    display: none;
 }
 
 form[class="newTask"]{
@@ -133,7 +138,6 @@ form[class="newTask"] button[type="submit"]{
 
 form[class="newTask"] button[type="submit"]:hover{
     cursor: pointer;
-
 }
 
 form[class="newTask"] button[type="reset"]{
@@ -141,13 +145,13 @@ form[class="newTask"] button[type="reset"]{
     height: 36px;
     width: 36px;
     color: white;
-    background-color: blueviolet;
+    background-color: var(--cancel-button-background-color);
     border: none;
     font-size: 24px;
 }
 
 form[class="newTask"] button[type="reset"]:hover{
-    background-color: var(--button-hover-background-color);
+    background-color: var(--cancel-button-background-color-hover);
 }
 
 form[class="newTask"] > div {
@@ -166,6 +170,7 @@ form[class="newTask"] > div > label{
 
 form[class="newTask"] > div > input, 
 form[class="newTask"] > div > select{
+    padding: 2px 4px;
     font-size: 1.2rem;
 }
 
@@ -182,25 +187,54 @@ form[class="newTask"] .formTitle{
 }
 
 /* Add Project Form */
-form[class="newProject inactive"]{
+div[class="addProjectOverlay inactive"]{
     display: none;
 }
 
 form[class="newProject"]{
-    background-color: white;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid var(--dark-blueviolet);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    gap: 8px;
+    font-size: 1.2rem;
 }
 
 form[class="newProject"] div{
     display: flex;
-    gap: 4px;
+    gap: 8px;
 }
 
 form[class="newProject"] div button{
     flex: 1;
+}
+
+form[class="newProject"] button[type="submit"]:hover{
+    cursor: pointer;
+}
+
+form[class="newProject"] button[type="submit"]{
+    background-color: blueviolet;
+    border: none;
+    border-radius: 8px;
+    width: 120px;
+    color: white;
+    height: 36px;
+    align-self: center;
+    font-size: 1.2rem;
+}
+
+form[class="newProject"] button[type="reset"]{
+    background-color: white;
+    border-radius: 8px;
+    color: var(--dark-blueviolet);
+    width: 120px;
+    height: 36px;
+    font-size: 1.2rem;
+    border: 2px solid var(--dark-blueviolet);
+}
+form[class="newProject"] input{
+    font-size: 1.2rem;
+    padding: 2px 4px;
 }

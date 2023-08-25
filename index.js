@@ -138,6 +138,7 @@ function submitProjectBtnHandler(e){
         updateProjectNameinFormSelect();
         addProjectFormOverlay.classList.add("inactive");
         displayProjects();
+        deleteProject();
 
         console.log(todoList);
         projectName.value = "";
@@ -162,6 +163,17 @@ function updateProjectNameinFormSelect(){
     })
 }
 
+function deleteProject(){
+    const removeProjectBtns = Array.from(document.querySelectorAll(".projectTab .closeButton"));
+
+    removeProjectBtns.forEach(function(removeProjectBtn){
+        removeProjectBtn.addEventListener("click", function(){
+            todoList.removeProject(removeProjectBtn.previousElementSibling.innerText);
+            displayProjects();
+        })
+    })
+}
+
 function displayProjects(){
     projectsDisplayArea.textContent = "";
     const projectNames = todoList.getProjectNames().slice(1);
@@ -170,9 +182,11 @@ function displayProjects(){
         projectsDisplayArea.innerHTML += `
         <div class="projectTab">
             <div class="projectTabName">${projectName}</div>
-            <div>&#10799;</div>
+            <div class="closeButton">&#10799;</div>
         </div>`;
-    })
+    });
+
+    deleteProject();
 }
 
 displayTodos("Home");

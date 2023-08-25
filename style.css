@@ -37,8 +37,16 @@ main .menu{
 }
 
 .menu .home{
-    padding-bottom: 8px;
-    border-bottom: 2px solid darkslateblue;
+    padding: 8px 0;
+}
+
+.menu .home:hover{
+    cursor: pointer;
+}
+
+.menu .projectSection{
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--dark-blueviolet);
 }
 
 /* Projects Display */
@@ -60,6 +68,42 @@ main .menu{
 #addProjectBtn:hover{
     cursor: pointer;
     background-color: var(--button-hover-background-color);
+}
+
+.projectTab{
+    display: flex;
+    padding: 0 8px;
+    font-size: 0.8em;
+    padding: 8px 16px;
+}
+
+.projectTab:hover{
+    border-radius: 8px;
+    background-color: #80a0aa;
+}
+
+.projectTab .closeButton{
+    border-radius: 50%;
+    height: 26px;
+    width: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.projectTab .closeButton:hover{
+    background-color: var(--cancel-button-background-color-hover);
+    color: white;
+    cursor: pointer;
+}
+
+.projectTab .projectTabName{
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+.projectTab .projectTabName:hover{
+    cursor: pointer;
 }
 
 /* Main Todo List Display */
@@ -172,6 +216,8 @@ form[class="newTask"] > div > input,
 form[class="newTask"] > div > select{
     padding: 2px 4px;
     font-size: 1.2rem;
+    border-radius: 4px;
+    border: 1px solid var(--dark-blueviolet);
 }
 
 form[class="newTask"] > div:first-child{

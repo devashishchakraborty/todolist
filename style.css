@@ -8,7 +8,9 @@ html, body{
     --dark-blueviolet: #7425be;
     --cancel-button-background-color: crimson;
     --cancel-button-background-color-hover: #e61542;
+    --project-tab-hover-bg-color: #80a0aa;
     font-family: Arial, Helvetica, sans-serif;
+    min-width: 700px;
 }
 
 header{
@@ -28,11 +30,11 @@ main{
 /* Side Menu */
 main .menu{
     display: flex;
-    flex-direction: column;
+    flex-flow: column wrap;
     gap: 8px;
     background-color: lightblue;
     width: 240px;
-    padding: 8px;
+    padding: 16px;
     font-size: 24px;
 }
 
@@ -47,6 +49,46 @@ main .menu{
 .menu .projectSection{
     padding-bottom: 4px;
     border-bottom: 2px solid var(--dark-blueviolet);
+}
+
+
+/* Color Coding Info */
+.colorCodingInfo{
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    background-color: #c0f0ff;
+    border: 1px solid blueviolet;
+    border-radius: 1px;
+    font-size: 0.6em;
+    padding: 8px;
+    gap: 2px;
+    align-self: flex-start;
+}
+
+.colorCodingInfo > div{
+    display: flex;
+    align-items: center;
+}
+
+.colorCodingInfo .redBox,
+.colorCodingInfo .orangeBox,
+.colorCodingInfo .yellowgreenBox{
+    height: 12px;
+    width: 12px;
+    border: 1px solid black;
+}
+
+.redBox{
+    background-color: red;
+}
+
+.orangeBox{
+    background-color: orange;
+}
+
+.yellowgreenBox{
+    background-color: yellowgreen;
 }
 
 /* Projects Display */
@@ -79,7 +121,7 @@ main .menu{
 
 .projectTab:hover{
     border-radius: 8px;
-    background-color: #80a0aa;
+    background-color: var(--project-tab-hover-bg-color);
 }
 
 .projectTab .closeButton{
@@ -111,8 +153,12 @@ main .dashboard{
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 16px;
+    padding: 16px 64px;
     gap: 16px;
+}
+
+.dashboard > *{
+    max-width: 800px;   
 }
 
 .dashboard .dashHeader{
@@ -290,13 +336,15 @@ form[class="newProject"] input{
     display: flex;
     flex-direction: column;
     gap: 4px;
+    font-size: 1.4rem;
 }
+
 .todoItemTab{
     display: flex;
     gap: 16px;
     border: 1px solid;
     border-radius: 4px;
-    padding: 4px;
+    padding: 8px 16px;
 }
 
 .todoItemTab > div:first-child{
@@ -304,17 +352,30 @@ form[class="newProject"] input{
     gap: 8px;
     flex: 1;
     align-items: center;
+    justify-content: space-between;
 }
 
 .todoItemTab .removeItemBtn{
     background-color: gainsboro;
     border-radius: 50%;
-    height: 24px;
-    width: 24px;
+    height: 30px;
+    width: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
+    font-size: 0.8em;
+}
+
+.todoItemTab[priority="high"]{
+    border-left:4px solid red;
+}
+
+.todoItemTab[priority="medium"]{
+    border-left: 4px solid orange;
+}
+
+.todoItemTab[priority="low"]{
+    border-left: 4px solid yellowgreen;
 }
 
 .todoItemTab .removeItemBtn:hover{

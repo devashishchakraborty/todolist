@@ -284,3 +284,8 @@ form[class="newProject"] input{
     font-size: 1.2rem;
     padding: 2px 4px;
 }
+
+/* Todo Item Tabs */
+.todoItemTab{
+    display: flex;
+}

@@ -113,10 +113,15 @@ function displayTodos(projectName){
     const currentProject = todoList.getProject(projectName);
 
     dashboardProjectTitle.textContent = projectName;
-    currentProject.itemList.forEach(function(todoTask){
+    currentProject.itemList.forEach(function(todoItem){
         todoDisplayArea.innerHTML += `
-        <div>
-            <div class="todoTaskTitle">Title: ${todoTask.title}</div>
+        <div class="todoItemTab">
+            <div>
+                <div class="todoItemTitle">Title: ${todoItem.title}</div>
+                <div class="todoItemPriority">Priority: ${todoItem.priority}</div>
+                <div class="todoItemDueDate">DueDate: ${todoItem.dueDate}</div>
+            </div>
+            <div class="removeItemBtn">&#10799;<div>
         </div>`;
     })
 }
@@ -137,8 +142,7 @@ function submitProjectBtnHandler(e){
         todoList.addProject(projectName.value, new Project());
         updateProjectNameinFormSelect();
         addProjectFormOverlay.classList.add("inactive");
-        displayProjects();
-        deleteProject();
+        displayProjectNames();
 
         console.log(todoList);
         projectName.value = "";
@@ -169,12 +173,12 @@ function deleteProject(){
     removeProjectBtns.forEach(function(removeProjectBtn){
         removeProjectBtn.addEventListener("click", function(){
             todoList.removeProject(removeProjectBtn.previousElementSibling.innerText);
-            displayProjects();
+            displayProjectNames();
         })
     })
 }
 
-function displayProjects(){
+function displayProjectNames(){
     projectsDisplayArea.textContent = "";
     const projectNames = todoList.getProjectNames().slice(1);
     
@@ -187,9 +191,19 @@ function displayProjects(){
     });
 
     deleteProject();
+    displayProjectTodos();
+}
+
+function displayProjectTodos(){
+    const projectTabNames = Array.from(document.querySelectorAll(".projectTab .projectTabName"));
+    projectTabNames.forEach(function(projectTabName){
+        projectTabName.addEventListener("click", function(){
+            displayTodos(projectTabName.innerText);
+        })
+    })
 }
 
 displayTodos("Home");
 addNewTodo();
-displayProjects();
+displayProjectNames();
 addNewProject();

@@ -63,6 +63,8 @@ const todoList = new TodoList();
 todoList.addProject("Home", new Project());
 
 // DOM Stuff
+const homeProjectTab = document.querySelector(".menu .home");
+
 const addTodoItemBtn = document.querySelector("#addTaskBtn");
 const addProjectBtn = document.querySelector("#addProjectBtn");
 
@@ -115,11 +117,10 @@ function displayTodos(projectName){
     dashboardProjectTitle.textContent = projectName;
     currentProject.itemList.forEach(function(todoItem){
         todoDisplayArea.innerHTML += `
-        <div class="todoItemTab">
+        <div class="todoItemTab" priority="${todoItem.priority}">
             <div>
-                <div class="todoItemTitle">Title: ${todoItem.title}</div>
-                <div class="todoItemPriority">Priority: ${todoItem.priority}</div>
-                <div class="todoItemDueDate">DueDate: ${todoItem.dueDate}</div>
+                <div class="todoItemTitle">${todoItem.title}</div>
+                <div class="todoItemDueDate">${todoItem.dueDate}</div>
             </div>
             <div class="removeItemBtn">&#10799;<div>
         </div>`;
@@ -200,6 +201,10 @@ function displayProjectTodos(){
         projectTabName.addEventListener("click", function(){
             displayTodos(projectTabName.innerText);
         })
+    })
+
+    homeProjectTab.addEventListener("click", function(){
+        displayTodos("Home");
     })
 }
 

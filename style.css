@@ -286,6 +286,39 @@ form[class="newProject"] input{
 }
 
 /* Todo Item Tabs */
+.todoDisplay{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
 .todoItemTab{
     display: flex;
+    gap: 16px;
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.todoItemTab > div:first-child{
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    align-items: center;
+}
+
+.todoItemTab .removeItemBtn{
+    background-color: gainsboro;
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+}
+
+.todoItemTab .removeItemBtn:hover{
+    cursor: pointer;
+    background-color: var(--cancel-button-background-color-hover);
+    color: white;
 }

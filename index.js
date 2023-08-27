@@ -42,8 +42,8 @@ class Project{
         this.itemList.push(todoItem);
     }
 
-    removeTodoItem(itemIndex){
-        this.itemList.splice(itemIndex);
+    removeTodoItem(itemName){
+        this.itemList = this.itemList.filter((todoItem) => todoItem.title !== itemName);
     }
 
     todoItemNameExists(todoItemName){
@@ -64,18 +64,14 @@ todoList.addProject("Home", new Project());
 
 // DOM Stuff
 const homeProjectTab = document.querySelector(".menu .home");
-
 const addTodoItemBtn = document.querySelector("#addTaskBtn");
 const addProjectBtn = document.querySelector("#addProjectBtn");
-
 const addTodoFormOverlay = document.querySelector(".addTaskFormOverlay");
 const newTodoTaskForm = document.querySelector(".newTask");
 const addProjectFormOverlay = document.querySelector(".addProjectOverlay")
 const newProjectForm = document.querySelector(".newProject");
-
 const todoDisplayArea = document.querySelector(".todoDisplay");
 const projectsDisplayArea = document.querySelector(".projectDisplayArea");
-
 const dashboardProjectTitle = document.querySelector(".dashboard .projectTitle");
 
 function addTodoBtnHandler(){
@@ -110,6 +106,18 @@ function addNewTodo(){
     newTodoTaskForm.addEventListener("reset", addTodoFormCloseBtnHandler);
 }
 
+function deleteTodo(){
+    const currentProject = dashboardProjectTitle.innerText;
+    const todoRemoveBtns = Array.from(document.querySelectorAll(".removeItemBtn"));
+    todoRemoveBtns.forEach(function(todoRemoveBtn){
+        todoRemoveBtn.addEventListener("click", function(){
+            const itemName = todoRemoveBtn.previousElementSibling.children[0].innerText;
+            todoList.getProject(currentProject).removeTodoItem(itemName);
+            displayTodos(currentProject);
+        })
+    })
+}
+
 function displayTodos(projectName){
     todoDisplayArea.textContent = "";
     const currentProject = todoList.getProject(projectName);
@@ -124,7 +132,8 @@ function displayTodos(projectName){
             </div>
             <div class="removeItemBtn">&#10799;<div>
         </div>`;
-    })
+    });
+    deleteTodo();
 }
 
 // Projects DOM

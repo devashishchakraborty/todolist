@@ -11,6 +11,7 @@ html, body{
     --project-tab-hover-bg-color: #80a0aa;
     font-family: Arial, Helvetica, sans-serif;
     min-width: 700px;
+    box-sizing: border-box;
 }
 
 header{
@@ -339,20 +340,57 @@ form[class="newProject"] input{
     font-size: 1.4rem;
 }
 
+.todoDisplay .todoItemTab:hover{
+    background-color: lightblue;
+}
+
 .todoItemTab{
     display: flex;
     gap: 16px;
     border: 1px solid;
     border-radius: 4px;
-    padding: 8px 16px;
+    padding: 8px 10px;
+    align-items: center;
 }
 
-.todoItemTab > div:first-child{
+.todoItemTab .todoItemDetails{
     display: flex;
     gap: 8px;
     flex: 1;
     align-items: center;
     justify-content: space-between;
+}
+
+.todoItemTab .todoItemDetails:hover{
+    cursor: pointer;
+}
+
+.customCheckbox{
+    display: flex;
+}
+
+.todoItemTab .customCheckbox:hover{
+    cursor: pointer;
+}
+
+.todoItemTab .customCheckbox{
+    border: 2px solid black;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+.customCheckbox[checked="true"]{
+    background-color: var(--dark-blueviolet);
+}
+
+.todoItemTab > div:first-child{
+    display: flex;
+    align-items: center;
+}
+
+.todoItemTab[completed="true"] > div:nth-child(2){
+    color: gray;
 }
 
 .todoItemTab .removeItemBtn{

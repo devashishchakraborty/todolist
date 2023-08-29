@@ -6,6 +6,7 @@ html, body{
     flex-direction: column;
     --button-hover-background-color: #9b31ff;
     --dark-blueviolet: #7425be;
+    --darker-blueviolet: #5b1d96;
     --cancel-button-background-color: crimson;
     --cancel-button-background-color-hover: #e61542;
     --project-tab-hover-bg-color: #80a0aa;
@@ -41,6 +42,9 @@ main .menu{
 
 .menu .home{
     padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .menu .home:hover{
@@ -52,6 +56,13 @@ main .menu{
     border-bottom: 2px solid var(--dark-blueviolet);
 }
 
+.projectSection > div{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    color: var(--darker-blueviolet);
+}
 
 /* Color Coding Info */
 .colorCodingInfo{
@@ -384,12 +395,12 @@ form[class="newProject"] input{
     background-color: var(--dark-blueviolet);
 }
 
-.todoItemTab > div:first-child{
+.todoItemTab > .customCheckbox{
     display: flex;
     align-items: center;
 }
 
-.todoItemTab[completed="true"] > div:nth-child(2){
+.todoItemTab[completed="true"] > .todoItemDetails{
     color: gray;
 }
 

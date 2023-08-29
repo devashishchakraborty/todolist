@@ -4,6 +4,7 @@ class Todo{
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
+        this.completed = false;
     }
 }
 
@@ -57,6 +58,22 @@ class Project{
         })
         return todoItemNames;
     }
+
+    toggleTodoItemCompletedStatus(title){
+        this.itemList.forEach(function(todoItem){
+            if (todoItem.title === title){
+                if (todoItem.completed === false){
+                    todoItem.completed = true;
+                } else {
+                    todoItem.completed = false;
+                }
+            }
+        })
+        
+    }
+    getTodoItemByTitle(title){
+        
+    }
 }
 
 const todoList = new TodoList();
@@ -64,14 +81,18 @@ todoList.addProject("Home", new Project());
 
 // DOM Stuff
 const homeProjectTab = document.querySelector(".menu .home");
+
 const addTodoItemBtn = document.querySelector("#addTaskBtn");
 const addProjectBtn = document.querySelector("#addProjectBtn");
+
 const addTodoFormOverlay = document.querySelector(".addTaskFormOverlay");
 const newTodoTaskForm = document.querySelector(".newTask");
 const addProjectFormOverlay = document.querySelector(".addProjectOverlay")
 const newProjectForm = document.querySelector(".newProject");
+
 const todoDisplayArea = document.querySelector(".todoDisplay");
 const projectsDisplayArea = document.querySelector(".projectDisplayArea");
+
 const dashboardProjectTitle = document.querySelector(".dashboard .projectTitle");
 
 function addTodoBtnHandler(){
@@ -85,7 +106,6 @@ function submitNewTodoFormHandler(e){
         todoList.getProject(project.value).addTodoItem(new Todo(title.value, description.value, dueDate.value, priority.value));
         addTodoFormOverlay.classList.add("inactive");
         displayTodos(project.value);
-        console.log(todoList); 
 
         title.value = "";
         description.value = "";
@@ -118,6 +138,18 @@ function deleteTodo(){
     })
 }
 
+function updateTodoCompletedStatus(){
+    const currentProject = dashboardProjectTitle.innerText;
+    const checkboxes = Array.from(document.querySelectorAll(".customCheckbox"));
+    checkboxes.forEach(function(checkbox){
+        checkbox.addEventListener("click", function(){
+            const todoItemTitle = checkbox.nextElementSibling.children[0].innerText;
+            todoList.getProject(currentProject).toggleTodoItemCompletedStatus(todoItemTitle);
+            displayTodos(currentProject);
+        })
+    })
+}
+
 function displayTodos(projectName){
     todoDisplayArea.textContent = "";
     const currentProject = todoList.getProject(projectName);
@@ -125,15 +157,18 @@ function displayTodos(projectName){
     dashboardProjectTitle.textContent = projectName;
     currentProject.itemList.forEach(function(todoItem){
         todoDisplayArea.innerHTML += `
-        <div class="todoItemTab" priority="${todoItem.priority}">
-            <div>
+        <div class="todoItemTab" priority="${todoItem.priority}" completed="${todoItem.completed}">
+            <div class="customCheckbox" checked=${todoItem.completed}>
+            </div>
+            <div class="todoItemDetails">
                 <div class="todoItemTitle">${todoItem.title}</div>
                 <div class="todoItemDueDate">${todoItem.dueDate}</div>
             </div>
-            <div class="removeItemBtn">&#10799;<div>
+            <div class="removeItemBtn">&#10799;</div>
         </div>`;
     });
     deleteTodo();
+    updateTodoCompletedStatus();
 }
 
 // Projects DOM
@@ -184,6 +219,7 @@ function deleteProject(){
         removeProjectBtn.addEventListener("click", function(){
             todoList.removeProject(removeProjectBtn.previousElementSibling.innerText);
             displayProjectNames();
+            updateProjectNameinFormSelect();
         })
     })
 }

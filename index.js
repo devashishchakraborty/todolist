@@ -76,6 +76,25 @@ class Project{
     }
 }
 
+// class Storage{
+//     setTodoList(list){
+//         localStorage.setItem("todoList", list);
+//     }
+
+//     addProject(projectName, projectObj){
+//         const todoList = this.getTodoList();
+//         todoList.
+//     }
+
+//     getTodoList(){
+//         return localStorage.getItem("todoList");
+//     }
+
+//     addTodoItem(projectName, todo){
+//         this.getTodoList().getProject(projectName).addTodoItem(todo);
+//     }
+// }
+
 const todoList = new TodoList();
 todoList.addProject("Home", new Project());
 
@@ -131,7 +150,7 @@ function deleteTodo(){
     const todoRemoveBtns = Array.from(document.querySelectorAll(".removeItemBtn"));
     todoRemoveBtns.forEach(function(todoRemoveBtn){
         todoRemoveBtn.addEventListener("click", function(){
-            const itemName = todoRemoveBtn.previousElementSibling.children[0].innerText;
+            const itemName = todoRemoveBtn.previousElementSibling.children[0].children[0].innerText;
             todoList.getProject(currentProject).removeTodoItem(itemName);
             displayTodos(currentProject);
         })
@@ -143,7 +162,7 @@ function updateTodoCompletedStatus(){
     const checkboxes = Array.from(document.querySelectorAll(".customCheckbox"));
     checkboxes.forEach(function(checkbox){
         checkbox.addEventListener("click", function(){
-            const todoItemTitle = checkbox.nextElementSibling.children[0].innerText;
+            const todoItemTitle = checkbox.nextElementSibling.children[0].children[0].innerText;
             todoList.getProject(currentProject).toggleTodoItemCompletedStatus(todoItemTitle);
             displayTodos(currentProject);
         })
@@ -158,12 +177,14 @@ function displayTodos(projectName){
     currentProject.itemList.forEach(function(todoItem){
         todoDisplayArea.innerHTML += `
         <div class="todoItemTab" priority="${todoItem.priority}" completed="${todoItem.completed}">
-            <div class="customCheckbox" checked=${todoItem.completed}>
-            </div>
-            <div class="todoItemDetails">
-                <div class="todoItemTitle">${todoItem.title}</div>
-                <div class="todoItemDueDate">${todoItem.dueDate}</div>
-            </div>
+            <div class="customCheckbox" checked=${todoItem.completed}></div>
+            <details>
+                <summary class="todoItemSummary">
+                    <div class="todoItemTitle">${todoItem.title}</div>
+                    <div class="todoItemDueDate">${todoItem.dueDate}</div>
+                </summary>
+                <div class="todoItemDescription">Description: ${todoItem.description}</div>
+            </details>
             <div class="removeItemBtn">&#10799;</div>
         </div>`;
     });

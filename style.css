@@ -364,20 +364,31 @@ form[class="newProject"] input{
     align-items: center;
 }
 
-.todoItemTab .todoItemDetails{
+.todoItemTab details{
+    display: flex;
+    flex: 1;
+}
+
+.todoItemTab details[open] summary{
+    padding-bottom: 8px;
+    border-bottom: 1px solid;
+}
+
+.todoItemTab details .todoItemDescription{
+    font-size: 0.7em;
+    padding-top: 8px;
+}
+
+.todoItemTab .todoItemSummary{
     display: flex;
     gap: 8px;
     flex: 1;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
 }
 
-.todoItemTab .todoItemDetails:hover{
+.todoItemTab .todoItemSummary:hover{
     cursor: pointer;
-}
-
-.customCheckbox{
-    display: flex;
 }
 
 .todoItemTab .customCheckbox:hover{
@@ -385,10 +396,11 @@ form[class="newProject"] input{
 }
 
 .todoItemTab .customCheckbox{
+    display: flex;
     border: 2px solid black;
     border-radius: 50%;
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
 }
 .customCheckbox[checked="true"]{
@@ -400,15 +412,29 @@ form[class="newProject"] input{
     align-items: center;
 }
 
-.todoItemTab[completed="true"] > .todoItemDetails{
+.todoItemTab[completed="true"] details{
     color: gray;
 }
+
+/* .todoItemTab .editItemBtn{
+    display: flex;
+    align-items: center;
+}
+
+.todoItemTab .editItemBtn:hover{
+    color: var(--darker-blueviolet);
+    cursor: pointer;
+}
+
+.todoItemTab .editItemBtn > svg{
+    height: 22px;
+} */
 
 .todoItemTab .removeItemBtn{
     background-color: gainsboro;
     border-radius: 50%;
-    height: 30px;
-    width: 30px;
+    height: 26px;
+    width: 26px;
     display: flex;
     justify-content: center;
     align-items: center;

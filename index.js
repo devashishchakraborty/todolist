@@ -10,41 +10,50 @@ class Todo{
 
 class TodoList{
     constructor(){
-        this.list = {}
+        this.projects = {};
+        this.projects["Home"] = new Project();
     }
 
     addProject(projectName, project){
-        this.list[projectName] = project;
+        this.projects[projectName] = project;
     }
 
     removeProject(projectName){
-        delete this.list[projectName];
+        delete this.projects[projectName];
     }
 
     getProject(projectName){
-        return this.list[projectName];
+        return this.projects[projectName];
+    }
+
+    getProjects(){
+        return this.projects;
+    }
+
+    setProjects(projects){
+        this.projects = projects;
     }
 
     projectNameExists(projectName){
-        return Object.keys(this.list).includes(projectName);
+        return Object.keys(this.projects).includes(projectName);
     }
 
     getProjectNames(){
-        return Object.keys(this.list);
+        return Object.keys(this.projects);
     }
 }
 
 class Project{
     constructor(){
-        this.itemList = [];
+        this.items = [];
     }
 
     addTodoItem(todoItem){
-        this.itemList.push(todoItem);
+        this.items.push(todoItem);
     }
 
     removeTodoItem(itemName){
-        this.itemList = this.itemList.filter((todoItem) => todoItem.title !== itemName);
+        this.itmes = this.itmes.filter((todoItem) => todoItem.title !== itemName);
     }
 
     todoItemNameExists(todoItemName){
@@ -52,15 +61,19 @@ class Project{
     }
 
     getTodoItemNames(){
-        let todoItemNames = [];
-        this.itemList.forEach(function(todoItem){
-            todoItemNames.push(todoItem.title);
-        })
-        return todoItemNames;
+        return this.items.map(todoItem => todoItem.title)
+    }
+
+    getTodoItems(){
+        return this.items;
+    }
+
+    setTodoItems(items){
+        this.items = items;
     }
 
     toggleTodoItemCompletedStatus(title){
-        this.itemList.forEach(function(todoItem){
+        this.items.forEach(function(todoItem){
             if (todoItem.title === title){
                 if (todoItem.completed === false){
                     todoItem.completed = true;
@@ -71,32 +84,60 @@ class Project{
         })
         
     }
-    getTodoItemByTitle(title){
+}
+
+class Storage{
+    setTodoList(data){
+        localStorage.setItem("todoList", JSON.stringify(data));
+    }
+
+    addProject(projectName, projectObj){
+        const todoList = this.getTodoList();
+        todoList.addProject(projectName, projectObj);
+        this.setTodoList(todoList);
+    }
+
+    projectNameExists(projectName){
+        const todoList = this.getTodoList();
+        return todoList.projectNameExists(projectName);
+    }
+
+    removeProject(projectName){
+        const todoList = this.getTodoList();
+        todoList.removeProject(projectName);
+        this.setTodoList(todoList);
+    }
+
+    getProjectNames(){
+        return this.getTodoList().getProjectNames()
+    }
+
+    getTodoList(){
+        const todoList = Object.assign(new TodoList(), JSON.parse(localStorage.getItem("todoList")));
         
+        let tempProjectsList = {};
+        for(let project in todoList.getProjects()){
+            tempProjectsList[project] = Object.assign(new Project(), todoList.getProjects()[project])
+        }
+        todoList.setProjects(tempProjectsList);
+
+        for(let project in todoList.getProjects()){
+            todoList.getProjects()[project].setTodoItems(
+                todoList.getProjects()[project].getTodoItems().map(
+                    function(todoItem){
+                        Object.assign(new Todo(), todoItem);
+                    }
+                )
+            )
+        }
+
+        return todoList;
     }
 }
 
-// class Storage{
-//     setTodoList(list){
-//         localStorage.setItem("todoList", list);
-//     }
-
-//     addProject(projectName, projectObj){
-//         const todoList = this.getTodoList();
-//         todoList.
-//     }
-
-//     getTodoList(){
-//         return localStorage.getItem("todoList");
-//     }
-
-//     addTodoItem(projectName, todo){
-//         this.getTodoList().getProject(projectName).addTodoItem(todo);
-//     }
-// }
-
 const todoList = new TodoList();
-todoList.addProject("Home", new Project());
+const storage = new Storage();
+
 
 // DOM Stuff
 const homeProjectTab = document.querySelector(".menu .home");
@@ -174,7 +215,7 @@ function displayTodos(projectName){
     const currentProject = todoList.getProject(projectName);
 
     dashboardProjectTitle.textContent = projectName;
-    currentProject.itemList.forEach(function(todoItem){
+    currentProject.getTodoItems().forEach(function(todoItem){
         todoDisplayArea.innerHTML += `
         <div class="todoItemTab" priority="${todoItem.priority}" completed="${todoItem.completed}">
             <div class="customCheckbox" checked=${todoItem.completed}></div>
@@ -202,17 +243,16 @@ function cancelProjectBtnHandler(){
 }
 
 function submitProjectBtnHandler(e){
-    if (todoList.projectNameExists(projectName.value)){
+    if (storage.projectNameExists(projectName.value)){
         alert("Project Name already exists, choose a different name.")
     } else {
-        todoList.addProject(projectName.value, new Project());
+        storage.addProject(projectName.value, new Project());
         updateProjectNameinFormSelect();
         addProjectFormOverlay.classList.add("inactive");
         displayProjectNames();
 
         console.log(todoList);
         projectName.value = "";
-    
     }
     e.preventDefault();
 }
@@ -226,7 +266,7 @@ function addNewProject(){
 function updateProjectNameinFormSelect(){
     const projectNameSelection = newTodoTaskForm.querySelector("#project");
     projectNameSelection.textContent = "";
-    todoList.getProjectNames().forEach(function(projectName){
+    storage.getProjectNames().forEach(function(projectName){
         projectNameSelection.innerHTML += `
         <option value=${projectName}>${projectName}</option>
         `
@@ -238,7 +278,7 @@ function deleteProject(){
 
     removeProjectBtns.forEach(function(removeProjectBtn){
         removeProjectBtn.addEventListener("click", function(){
-            todoList.removeProject(removeProjectBtn.previousElementSibling.innerText);
+            storage.removeProject(removeProjectBtn.previousElementSibling.innerText);
             displayProjectNames();
             updateProjectNameinFormSelect();
         })
@@ -247,7 +287,7 @@ function deleteProject(){
 
 function displayProjectNames(){
     projectsDisplayArea.textContent = "";
-    const projectNames = todoList.getProjectNames().slice(1);
+    const projectNames = storage.getProjectNames().slice(1);
     
     projectNames.forEach(function(projectName){
         projectsDisplayArea.innerHTML += `

@@ -30,8 +30,8 @@ class TodoList{
         return this.projects;
     }
 
-    setProjects(projects){
-        this.projects = projects;
+    setProject(projectName, projectObj){
+        this.projects[projectName] = projectObj;
     }
 
     projectNameExists(projectName){
@@ -45,7 +45,7 @@ class TodoList{
 
 class Project{
     constructor(){
-        this.items = [];
+        this.items = new Array();
     }
 
     addTodoItem(todoItem){
@@ -91,9 +91,9 @@ class Storage{
         localStorage.setItem("todoList", JSON.stringify(data));
     }
 
-    addProject(projectName, projectObj){
+    addProject(projectName){
         const todoList = this.getTodoList();
-        todoList.addProject(projectName, projectObj);
+        todoList.addProject(projectName, new Project());
         this.setTodoList(todoList);
     }
 
@@ -115,29 +115,53 @@ class Storage{
     getTodoList(){
         const todoList = Object.assign(new TodoList(), JSON.parse(localStorage.getItem("todoList")));
         
-        let tempProjectsList = {};
         for(let project in todoList.getProjects()){
-            tempProjectsList[project] = Object.assign(new Project(), todoList.getProjects()[project])
+            todoList.setProject(project, Object.assign(new Project(), todoList.getProject(project)));
         }
-        todoList.setProjects(tempProjectsList);
-
-        for(let project in todoList.getProjects()){
-            todoList.getProjects()[project].setTodoItems(
-                todoList.getProjects()[project].getTodoItems().map(
-                    function(todoItem){
-                        Object.assign(new Todo(), todoItem);
-                    }
-                )
-            )
-        }
+        
+        // for(let project in todoList.getProjects()){
+        //     todoList.getProject(project).setTodoItems(
+        //         todoList.getProject(project).getTodoItems().map(
+        //             function(todoItem){
+        //                 Object.assign(new Todo(), todoItem);
+        //                 console.log(todoItem);
+        //             }
+        //         )
+        //     )
+        // }
 
         return todoList;
     }
+
+    addTodoItem(projectName, todoItem){
+        const todoList = this.getTodoList();
+        todoList.getProject(projectName).addTodoItem(todoItem);
+        this.setTodoList(todoList);
+    }
+
+    removeTodoItem(projectName, todoItemName){
+        const todoList = this.getTodoList();
+        todoList.getProject(projectName).removeTodoItem(todoItemName);
+        this.setTodoList(todoList);
+    }
+
+    getTodoItems(projectName){
+        return this.getTodoList().getProject(projectName).getTodoItems();
+    }
+
+    todoItemNameExists(projectName, todoItemName){
+        return this.getTodoList().getProject(projectName).todoItemNameExists(todoItemName);
+    }
+
+    toggleTodoItemCompletedStatus(projectName, todoItem){
+        const todoList = this.getTodoList();
+        todoList.getProject(projectName).toggleTodoItemCompletedStatus(todoItem);
+        this.setTodoList(todoList);
+    }
+    
 }
 
-const todoList = new TodoList();
 const storage = new Storage();
-
 
 // DOM Stuff
 const homeProjectTab = document.querySelector(".menu .home");
@@ -160,10 +184,10 @@ function addTodoBtnHandler(){
 }
 
 function submitNewTodoFormHandler(e){
-    if (todoList.getProject(project.value).todoItemNameExists(title.value)){
+    if (storage.todoItemNameExists(project.value, title.value)){
         alert("Task Name already exists, choose another name");
     } else {
-        todoList.getProject(project.value).addTodoItem(new Todo(title.value, description.value, dueDate.value, priority.value));
+        storage.addTodoItem(project.value, new Todo(title.value, description.value, dueDate.value, priority.value));
         addTodoFormOverlay.classList.add("inactive");
         displayTodos(project.value);
 
@@ -187,35 +211,35 @@ function addNewTodo(){
 }
 
 function deleteTodo(){
-    const currentProject = dashboardProjectTitle.innerText;
+    const projectName = dashboardProjectTitle.innerText;
     const todoRemoveBtns = Array.from(document.querySelectorAll(".removeItemBtn"));
     todoRemoveBtns.forEach(function(todoRemoveBtn){
         todoRemoveBtn.addEventListener("click", function(){
             const itemName = todoRemoveBtn.previousElementSibling.children[0].children[0].innerText;
-            todoList.getProject(currentProject).removeTodoItem(itemName);
-            displayTodos(currentProject);
+            storage.removeTodoItem(projectName, itemName);
+            displayTodos(projectName);
         })
     })
 }
 
 function updateTodoCompletedStatus(){
-    const currentProject = dashboardProjectTitle.innerText;
+    const projectName = dashboardProjectTitle.innerText;
     const checkboxes = Array.from(document.querySelectorAll(".customCheckbox"));
     checkboxes.forEach(function(checkbox){
         checkbox.addEventListener("click", function(){
             const todoItemTitle = checkbox.nextElementSibling.children[0].children[0].innerText;
-            todoList.getProject(currentProject).toggleTodoItemCompletedStatus(todoItemTitle);
-            displayTodos(currentProject);
+            console.log(todoItemTitle)
+            storage.toggleTodoItemCompletedStatus(projectName, todoItemTitle);
+            displayTodos(projectName);
         })
     })
 }
 
 function displayTodos(projectName){
     todoDisplayArea.textContent = "";
-    const currentProject = todoList.getProject(projectName);
 
     dashboardProjectTitle.textContent = projectName;
-    currentProject.getTodoItems().forEach(function(todoItem){
+    storage.getTodoItems(projectName).forEach(function(todoItem){
         todoDisplayArea.innerHTML += `
         <div class="todoItemTab" priority="${todoItem.priority}" completed="${todoItem.completed}">
             <div class="customCheckbox" checked=${todoItem.completed}></div>
@@ -246,7 +270,7 @@ function submitProjectBtnHandler(e){
     if (storage.projectNameExists(projectName.value)){
         alert("Project Name already exists, choose a different name.")
     } else {
-        storage.addProject(projectName.value, new Project());
+        storage.addProject(projectName.value);
         updateProjectNameinFormSelect();
         addProjectFormOverlay.classList.add("inactive");
         displayProjectNames();

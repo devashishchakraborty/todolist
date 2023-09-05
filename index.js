@@ -118,17 +118,6 @@ class Storage{
         for(let project in todoList.getProjects()){
             todoList.setProject(project, Object.assign(new Project(), todoList.getProject(project)));
         }
-        
-        // for(let project in todoList.getProjects()){
-        //     todoList.getProject(project).setTodoItems(
-        //         todoList.getProject(project).getTodoItems().map(
-        //             function(todoItem){
-        //                 Object.assign(new Todo(), todoItem);
-        //                 console.log(todoItem);
-        //             }
-        //         )
-        //     )
-        // }
 
         return todoList;
     }
@@ -228,7 +217,6 @@ function updateTodoCompletedStatus(){
     checkboxes.forEach(function(checkbox){
         checkbox.addEventListener("click", function(){
             const todoItemTitle = checkbox.nextElementSibling.children[0].children[0].innerText;
-            console.log(todoItemTitle)
             storage.toggleTodoItemCompletedStatus(projectName, todoItemTitle);
             displayTodos(projectName);
         })
@@ -275,7 +263,6 @@ function submitProjectBtnHandler(e){
         addProjectFormOverlay.classList.add("inactive");
         displayProjectNames();
 
-        console.log(todoList);
         projectName.value = "";
     }
     e.preventDefault();

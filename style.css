@@ -365,6 +365,11 @@ form[class="newProject"] input{
     align-items: center;
 }
 
+.todoItemTab .todoItemDueDate{
+    font-size: 0.8em;
+    align-self: center;
+}
+
 .todoItemTab details{
     display: flex;
     flex: 1;

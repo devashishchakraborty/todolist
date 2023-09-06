@@ -154,18 +154,14 @@ const storage = new Storage();
 
 // DOM Stuff
 const homeProjectTab = document.querySelector(".menu .home");
-
 const addTodoItemBtn = document.querySelector("#addTaskBtn");
 const addProjectBtn = document.querySelector("#addProjectBtn");
-
 const addTodoFormOverlay = document.querySelector(".addTaskFormOverlay");
 const newTodoTaskForm = document.querySelector(".newTask");
 const addProjectFormOverlay = document.querySelector(".addProjectOverlay")
 const newProjectForm = document.querySelector(".newProject");
-
 const todoDisplayArea = document.querySelector(".todoDisplay");
 const projectsDisplayArea = document.querySelector(".projectDisplayArea");
-
 const dashboardProjectTitle = document.querySelector(".dashboard .projectTitle");
 
 function addTodoBtnHandler(){
@@ -259,7 +255,6 @@ function submitProjectBtnHandler(e){
         alert("Project Name already exists, choose a different name.")
     } else {
         storage.addProject(projectName.value);
-        updateProjectNameinFormSelect();
         addProjectFormOverlay.classList.add("inactive");
         displayProjectNames();
 
@@ -289,6 +284,9 @@ function deleteProject(){
 
     removeProjectBtns.forEach(function(removeProjectBtn){
         removeProjectBtn.addEventListener("click", function(){
+            if (document.querySelector(".dashboard .projectTitle").innerText === removeProjectBtn.previousElementSibling.innerText){
+                displayTodos("Home");
+            }
             storage.removeProject(removeProjectBtn.previousElementSibling.innerText);
             displayProjectNames();
             updateProjectNameinFormSelect();
@@ -310,6 +308,7 @@ function displayProjectNames(){
 
     deleteProject();
     displayProjectTodos();
+    updateProjectNameinFormSelect();
 }
 
 function displayProjectTodos(){

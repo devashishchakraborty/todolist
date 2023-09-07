@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <script src="main.js" defer></script>
+</head>
+<body>
+    <div class="addProjectOverlay inactive">
+        <form action="get" class="newProject">
+            <div>Add New Project</div>
+            <input type="text" id="projectName" name="projectName" required>
+            <div>
+                <button type="submit">Add</button>
+                <button type="reset">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="addTaskFormOverlay inactive">
+        <form class="newTask" action="" method="get">
+            <div>
+                <div class="formTitle">Add a new Task</div>
+                <button type="reset">&#10799;</button>
+            </div>
+            <div>
+                <label for="title">Title: </label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div>
+                <label for="description">Description: </label>
+                <input type="text" name="description" id="description" required>
+            </div>
+            <div>
+                <label for="dueDate">Due Date: </label>
+                <input type="date" name="dueDate" id="dueDate" required>
+            </div>
+            <div>
+                <label for="priority">Priority: </label>
+                <select name="priority" id="priority">
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                </select>
+            </div>
+            <div>
+                <label for="project">Project:</label>
+                <select name="project" id="project">
+                    <option value="Home">Home</option>
+                </select>
+            </div>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    <header>
+        TODO LIST
+    </header>
+    <main>
+        <div class="menu">
+            <div class="home">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="24.89" viewBox="0 0 576 512"><path fill="currentColor" d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"/></svg>
+                Home
+            </div>
+            <div class="projectSection">
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512"><path fill="currentColor" d="M48 48a48 48 0 1 0 48 48a48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48a48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48a48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"/></svg>
+                    Projects
+                </div>
+                <button id="addProjectBtn">+</button>
+            </div>
+            <div class="projectDisplayArea"></div>
+            <div class="colorCodingInfo">
+                Todo Task Priority
+                <div><div class="redBox"></div>&nbsp;High</div>
+                <div><div class="orangeBox"></div>&nbsp;Medium</div>
+                <div><div class="yellowgreenBox"></div>&nbsp;Low</div>
+            </div>
+        </div>
+        <div class="dashboard">
+            <div class="dashHeader">
+                <div class="projectTitle">Home</div>
+                <button id="addTaskBtn">+</button>    
+            </div>
+            <div class="todoDisplay"></div>
+        </div>
+    </main>
+</body>
+</html>

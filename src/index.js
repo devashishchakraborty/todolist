@@ -1,3 +1,5 @@
+import './style.css';
+
 class Todo{
     constructor(title, description, dueDate, priority){
         this.title = title;
@@ -53,7 +55,7 @@ class Project{
     }
 
     removeTodoItem(itemName){
-        this.itmes = this.itmes.filter((todoItem) => todoItem.title !== itemName);
+        this.items = this.items.filter((todoItem) => todoItem.title !== itemName);
     }
 
     todoItemNameExists(todoItemName){

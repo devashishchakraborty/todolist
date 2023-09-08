@@ -152,7 +152,9 @@ function displayProjectNames(){
     projectNames.forEach(function(projectName){
         projectsDisplayArea.innerHTML += `
         <div class="projectTab">
-            <div class="projectTabName">${projectName}</div>
+            <div class="projectTabName">
+                ${projectName}
+            </div>
             <div class="closeButton">&#10799;</div>
         </div>`;
     });

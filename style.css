@@ -1,0 +1,466 @@
+html, body{
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    --button-hover-background-color: #9b31ff;
+    --dark-blueviolet: #7425be;
+    --darker-blueviolet: #5b1d96;
+    --cancel-button-background-color: crimson;
+    --cancel-button-background-color-hover: #e61542;
+    --project-tab-hover-bg-color: #80a0aa;
+    font-family: Arial, Helvetica, sans-serif;
+    min-width: 700px;
+    box-sizing: border-box;
+}
+
+header{
+    background-color: blueviolet;
+    color: white;
+    padding: 8px;
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+main{
+    display: flex;
+    flex: 1;
+}
+
+/* Side Menu */
+main .menu{
+    display: flex;
+    flex-flow: column wrap;
+    gap: 8px;
+    background-color: lightblue;
+    width: 240px;
+    padding: 16px;
+    font-size: 24px;
+}
+
+.menu .home{
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+}
+
+.menu .home:hover{
+    cursor: pointer;
+}
+
+.menu .projectSection{
+    padding-bottom: 4px;
+    border-bottom: 2px solid var(--dark-blueviolet);
+}
+
+.projectSection > div{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: bold;
+    color: var(--darker-blueviolet);
+}
+
+/* Color Coding Info */
+.colorCodingInfo{
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    background-color: #c0f0ff;
+    border: 1px solid blueviolet;
+    border-radius: 1px;
+    font-size: 0.6em;
+    padding: 8px;
+    gap: 2px;
+    align-self: flex-start;
+}
+
+.colorCodingInfo > div{
+    display: flex;
+    align-items: center;
+}
+
+.colorCodingInfo .redBox,
+.colorCodingInfo .orangeBox,
+.colorCodingInfo .yellowgreenBox{
+    height: 12px;
+    width: 12px;
+    border: 1px solid black;
+}
+
+.redBox{
+    background-color: red;
+}
+
+.orangeBox{
+    background-color: orange;
+}
+
+.yellowgreenBox{
+    background-color: yellowgreen;
+}
+
+/* Projects Display */
+.menu .projectSection{
+    display: flex;
+    justify-content: space-between;
+}
+
+#addProjectBtn{
+    border-radius: 50%;
+    height: 32px;
+    width: 32px;
+    border: none;
+    font-size: 26px;
+    background-color: blueviolet;
+    color: white;
+}
+
+#addProjectBtn:hover{
+    cursor: pointer;
+    background-color: var(--button-hover-background-color);
+}
+
+.projectTab{
+    display: flex;
+    padding: 0 8px;
+    font-size: 0.8em;
+    padding: 8px 16px;
+}
+
+.projectTab:hover{
+    border-radius: 8px;
+    background-color: var(--project-tab-hover-bg-color);
+}
+
+.projectTab .closeButton{
+    border-radius: 50%;
+    height: 26px;
+    width: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.projectTab .closeButton:hover{
+    background-color: var(--cancel-button-background-color-hover);
+    color: white;
+    cursor: pointer;
+}
+
+.projectTab .projectTabName{
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+.projectTab .projectTabName:hover{
+    cursor: pointer;
+}
+
+/* Main Todo List Display */
+main .dashboard{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 16px 64px;
+    gap: 16px;
+}
+
+.dashboard > *{
+    max-width: 800px;   
+}
+
+.dashboard .dashHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 2px solid blueviolet;
+}
+
+#addTaskBtn{
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    font-size: 32px;
+    background-color: blueviolet;
+    border: none;
+    color: white;
+}
+
+#addTaskBtn:hover{
+    cursor: pointer;
+    background-color: var(--button-hover-background-color);
+}
+
+.dashboard .dashHeader .projectTitle{
+    font-size: 24px;
+}
+
+/* Form Overlays */
+.addTaskFormOverlay,
+.addProjectOverlay{
+    display: flex;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Add Task Form */
+div[class="addTaskFormOverlay inactive"]{
+    display: none;
+}
+
+form[class="newTask"]{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    gap: 10px;
+}
+
+form[class="newTask"] button[type="submit"]{
+    background-color: blueviolet;
+    border: none;
+    border-radius: 8px;
+    width: 120px;
+    color: white;
+    height: 36px;
+    align-self: center;
+    font-size: 1.2rem;
+}
+
+form[class="newTask"] button[type="submit"]:hover{
+    cursor: pointer;
+}
+
+form[class="newTask"] button[type="reset"]{
+    border-radius: 50%;
+    height: 36px;
+    width: 36px;
+    color: white;
+    background-color: var(--cancel-button-background-color);
+    border: none;
+    font-size: 24px;
+}
+
+form[class="newTask"] button[type="reset"]:hover{
+    background-color: var(--cancel-button-background-color-hover);
+}
+
+form[class="newTask"] > div {
+    display: flex;
+    gap: 8px;
+}
+
+form[class="newTask"] > div > label{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100px;
+    font-size: 1.2rem;
+
+}
+
+form[class="newTask"] > div > input, 
+form[class="newTask"] > div > select{
+    padding: 2px 4px;
+    font-size: 1.2rem;
+    border-radius: 4px;
+    border: 1px solid var(--dark-blueviolet);
+}
+
+form[class="newTask"] > div:first-child{
+    justify-content: space-between;
+}
+
+form[class="newTask"] .formTitle{
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--dark-blueviolet);
+}
+
+/* Add Project Form */
+div[class="addProjectOverlay inactive"]{
+    display: none;
+}
+
+form[class="newProject"]{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    gap: 8px;
+    font-size: 1.2rem;
+}
+
+form[class="newProject"] div{
+    display: flex;
+    gap: 8px;
+}
+
+form[class="newProject"] div button{
+    flex: 1;
+}
+
+form[class="newProject"] button[type="submit"]:hover{
+    cursor: pointer;
+}
+
+form[class="newProject"] button[type="submit"]{
+    background-color: blueviolet;
+    border: none;
+    border-radius: 8px;
+    width: 120px;
+    color: white;
+    height: 36px;
+    align-self: center;
+    font-size: 1.2rem;
+}
+
+form[class="newProject"] button[type="reset"]{
+    background-color: white;
+    border-radius: 8px;
+    color: var(--dark-blueviolet);
+    width: 120px;
+    height: 36px;
+    font-size: 1.2rem;
+    border: 2px solid var(--dark-blueviolet);
+}
+form[class="newProject"] input{
+    font-size: 1.2rem;
+    padding: 2px 4px;
+}
+
+/* Todo Item Tabs */
+.todoDisplay{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 1.4rem;
+}
+
+.todoDisplay .todoItemTab:hover{
+    background-color: lightblue;
+}
+
+.todoItemTab{
+    display: flex;
+    gap: 16px;
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 8px 10px;
+    align-items: center;
+}
+
+.todoItemTab .todoItemDueDate{
+    font-size: 0.8em;
+    align-self: center;
+}
+
+.todoItemTab details{
+    display: flex;
+    flex: 1;
+}
+
+.todoItemTab details[open] summary{
+    padding-bottom: 8px;
+    border-bottom: 1px solid;
+}
+
+.todoItemTab details .todoItemDescription{
+    font-size: 0.7em;
+    padding-top: 8px;
+}
+
+.todoItemTab .todoItemSummary{
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    align-items: stretch;
+    justify-content: space-between;
+}
+
+.todoItemTab .todoItemSummary:hover{
+    cursor: pointer;
+}
+
+.todoItemTab .customCheckbox:hover{
+    cursor: pointer;
+}
+
+.todoItemTab .customCheckbox{
+    display: flex;
+    border: 2px solid black;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+.customCheckbox[checked="true"]{
+    background-color: var(--dark-blueviolet);
+}
+
+.todoItemTab > .customCheckbox{
+    display: flex;
+    align-items: center;
+}
+
+.todoItemTab[completed="true"] details{
+    color: gray;
+}
+
+/* .todoItemTab .editItemBtn{
+    display: flex;
+    align-items: center;
+}
+
+.todoItemTab .editItemBtn:hover{
+    color: var(--darker-blueviolet);
+    cursor: pointer;
+}
+
+.todoItemTab .editItemBtn > svg{
+    height: 22px;
+} */
+
+.todoItemTab .removeItemBtn{
+    background-color: gainsboro;
+    border-radius: 50%;
+    height: 26px;
+    width: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+}
+
+.todoItemTab[priority="high"]{
+    border-left:4px solid red;
+}
+
+.todoItemTab[priority="medium"]{
+    border-left: 4px solid orange;
+}
+
+.todoItemTab[priority="low"]{
+    border-left: 4px solid yellowgreen;
+}
+
+.todoItemTab .removeItemBtn:hover{
+    cursor: pointer;
+    background-color: var(--cancel-button-background-color-hover);
+    color: white;
+}

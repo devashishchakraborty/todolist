@@ -1,4 +1,3 @@
-import './style.css';
 import { Todo } from './Todo';
 import { Storage } from './Storage';
 

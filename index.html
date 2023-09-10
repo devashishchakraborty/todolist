@@ -12,7 +12,7 @@
     <div class="addProjectOverlay inactive">
         <form action="get" class="newProject">
             <div>Add New Project</div>
-            <input type="text" id="projectName" name="projectName" required>
+            <input type="text" id="projectName" name="projectName" maxlength="20" required>
             <div>
                 <button type="submit">Add</button>
                 <button type="reset">Cancel</button>
@@ -28,11 +28,11 @@
             </div>
             <div>
                 <label for="title">Title: </label>
-                <input type="text" id="title" name="title" required>
+                <input type="text" id="title" name="title" maxlength="20" required>
             </div>
             <div>
                 <label for="description">Description: </label>
-                <input type="text" name="description" id="description" required>
+                <input type="text" name="description" id="description" maxlength="30" required>
             </div>
             <div>
                 <label for="dueDate">Due Date: </label>

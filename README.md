@@ -1,7 +1,7 @@
 # Todo List
 ## About
 - Todo List Project created using HTML, CSS, and Vanilla Javascript following TheOdinProject's [curriculum](https://theodinproject.com).
-- Live Preview -> [Here](https://devashishchakra.github.io/todolist)
+- Live Preview -> [Here](https://devashishchakraborty.github.io/todolist)
 
 ## Screenshots
 ![Screenshot of Webpage](image.png)
